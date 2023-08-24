@@ -1,0 +1,12 @@
+{
+  "domain": "swiss_meteo_warnings",
+  "name": "Swiss Meteo Warnings",
+  "codeowners": [
+    "@marquisolivier"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/marquisolivier/swiss_meteo_warnings",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/marquisolivier/swiss_meteo_warnings/issues",
+  "version": "0.0.0"
+}
