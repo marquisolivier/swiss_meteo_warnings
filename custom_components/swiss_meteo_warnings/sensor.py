@@ -103,10 +103,14 @@ class SwissMeteoWarningSensor(CoordinatorEntity, SensorEntity):
 
         warning_level = WarningLevel.NONE
         if len(warnings) > 0:
-            first_or_default = next((w for w in warnings if w.type is self.entity_description.key), None)
-            if first_or_default is not None:
-                warning_level = first_or_default.level
+            warning = next((w for w in warnings if w.type is self.entity_description.key), None)
+            if warning is not None:
+                warning_level = warning.level
 
         self._attr_native_value = int(warning_level)
-        LOGGER.debug(f"{self.entity_description.key.name} is {warning_level.name} ({self._attr_native_value})" )
+        LOGGER.debug("%s is %s (%s)", self.entity_description.key.name,
+            warning_level.name,
+            self._attr_native_value
+        )
         self.async_write_ha_state()
+

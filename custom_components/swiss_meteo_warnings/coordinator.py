@@ -18,7 +18,6 @@ from .swissmeteowarningsclient import (
 
 from .const import DOMAIN, LOGGER
 
-# https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
 class SwissMeteoWarningsCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
     config_entry: ConfigEntry
@@ -44,13 +43,8 @@ class SwissMeteoWarningsCoordinator(DataUpdateCoordinator):
         )
 
     async def _async_update_data(self):
-        LOGGER.warn("_async_update_data")
         """Update data via library."""
         try:
             return await self.client.async_get_data()
         except SwissMeteoWarningsApiClientError as exception:
             raise UpdateFailed(exception) from exception
-
-    async def async_config_entry_first_refresh(self):
-        LOGGER.warn("async_config_entry_first_refresh")
-        await self._async_refresh(log_failures=False, raise_on_auth_failed=True)
