@@ -4,17 +4,18 @@ from __future__ import annotations
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import ATTRIBUTION, DOMAIN, NAME, VERSION
-from .coordinator import SwissMeteoWarningsDataUpdateCoordinator
+from .const import ATTRIBUTION, DOMAIN, NAME, VERSION, LOGGER
+from .coordinator import SwissMeteoWarningsCoordinator
 
 
 class SwissMeteoWarningsEntity(CoordinatorEntity):
     """SwissMeteoWarningsEntity class."""
-
+    LOGGER.warn("Create Entity instance")
     _attr_attribution = ATTRIBUTION
 
-    def __init__(self, coordinator: SwissMeteoWarningsDataUpdateCoordinator) -> None:
+    def __init__(self, coordinator: SwissMeteoWarningsCoordinator) -> None:
         """Initialize."""
+        LOGGER.warn("Init Entity instance")
         super().__init__(coordinator)
         self._attr_unique_id = coordinator.config_entry.entry_id
         self._attr_device_info = DeviceInfo(

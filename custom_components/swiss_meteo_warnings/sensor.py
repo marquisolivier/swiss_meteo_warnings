@@ -1,46 +1,112 @@
-"""Sensor platform for swiss_meteo_warnings."""
+"""Definition of Swiss Meteo Warning sensor platform."""
 from __future__ import annotations
 
-from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
+from dataclasses import dataclass
 
-from .const import DOMAIN
-from .coordinator import SwissMeteoWarningsDataUpdateCoordinator
-from .entity import SwissMeteoWarningsEntity
-
-ENTITY_DESCRIPTIONS = (
-    SensorEntityDescription(
-        key="swiss_meteo_warnings",
-        name="Integration Sensor",
-        icon="mdi:format-quote-close",
-    ),
+from homeassistant.components.sensor import (
+    SensorEntity,
+    SensorEntityDescription,
+    SensorStateClass,
 )
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
+
+from .const import DOMAIN, LOGGER
+from .swissmeteowarningsclient import SwissMeteoWarning, WarningType, WarningLevel
+
+from .coordinator import SwissMeteoWarningsCoordinator
+
+@dataclass
+class SwissMeteoWarningsEntityDescription(SensorEntityDescription):
+    """Describes Swiss Meteo Warning sensor entity."""
+
+# Keys must match those in the data dictionary
+SENSOR_TYPES: list[SwissMeteoWarningsEntityDescription] = [
+    SwissMeteoWarningsEntityDescription(
+        key=WarningType.THUNDERSTORM,
+        translation_key="thunderstorm",
+        state_class=SensorStateClass.MEASUREMENT,
+        #value=lambda data: LOGGER.warn(data),
+        icon="mdi:weather-lightning",
+    ),
+    SwissMeteoWarningsEntityDescription(
+        key=WarningType.RAIN,
+        translation_key="rain",
+        state_class=SensorStateClass.MEASUREMENT,
+        #value=lambda data: data.get("nh3_MR100"),
+        icon="mdi:weather-pouring",
+    ),
+    SwissMeteoWarningsEntityDescription(
+        key=WarningType.HEAT_WAVE,
+        translation_key="heat_wave",
+        state_class=SensorStateClass.MEASUREMENT,
+        #value=lambda data: data.get("ash3"),
+        icon="mdi:heat-wave",
+    ),
+    SwissMeteoWarningsEntityDescription(
+        key=WarningType.FOREST_FIRE,
+        translation_key="forest_fire",
+        state_class=SensorStateClass.MEASUREMENT,
+        #value=lambda data: data.get("ash3"),
+        icon="mdi:fire",
+    ),
+    SwissMeteoWarningsEntityDescription(
+        key=WarningType.FLOOD,
+        translation_key="flood",
+        state_class=SensorStateClass.MEASUREMENT,
+        #value=lambda data: data.get("ash3"),
+        icon="mdi:home-flood",
+    ),
+]
 
 
-async def async_setup_entry(hass, entry, async_add_devices):
-    """Set up the sensor platform."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices(
-        SwissMeteoWarningsSensor(
-            coordinator=coordinator,
-            entity_description=entity_description,
-        )
-        for entity_description in ENTITY_DESCRIPTIONS
-    )
+async def async_setup_entry(
+    hass: HomeAssistant,
+    config: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    """Set up sensor entities based on a config entry."""
+
+    coordinator = hass.data[DOMAIN][config.entry_id]
+
+    entities: list[SwissMeteoWarningSensor] = []
+
+    for description in SENSOR_TYPES:
+        entities.append(SwissMeteoWarningSensor(coordinator, description))
+
+    async_add_entities(entities)
 
 
-class SwissMeteoWarningsSensor(SwissMeteoWarningsEntity, SensorEntity):
-    """swiss_meteo_warnings Sensor class."""
+class SwissMeteoWarningSensor(CoordinatorEntity, SensorEntity):
+    """Representation of a Sensor."""
+
+    _attr_has_entity_name = True
 
     def __init__(
         self,
-        coordinator: SwissMeteoWarningsDataUpdateCoordinator,
-        entity_description: SensorEntityDescription,
+        coordinator: SwissMeteoWarningsCoordinator,
+        description: SwissMeteoWarningsEntityDescription,
     ) -> None:
-        """Initialize the sensor class."""
+        """Initialize a single sensor."""
         super().__init__(coordinator)
-        self.entity_description = entity_description
+        self.entity_description: SwissMeteoWarningsEntityDescription = description
 
-    @property
-    def native_value(self) -> str:
-        """Return the native value of the sensor."""
-        return self.coordinator.data.get("body")
+        self._attr_device_info = coordinator.client.post_code
+        self._attr_unique_id = f"{coordinator.client.post_code}_{description.key.name}"
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+        warnings = list[SwissMeteoWarning](self.coordinator.data)
+
+        warning_level = WarningLevel.NONE
+        if len(warnings) > 0:
+            first_or_default = next((w for w in warnings if w.type is self.entity_description.key), None)
+            if first_or_default is not None:
+                warning_level = first_or_default.level
+
+        self._attr_native_value = int(warning_level)
+        LOGGER.debug(f"{self.entity_description.key.name} is {warning_level.name} ({self._attr_native_value})" )
+        self.async_write_ha_state()

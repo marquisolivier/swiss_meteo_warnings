@@ -10,9 +10,9 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .api import SwissMeteoWarningsApiClient
-from .const import DOMAIN, CONF_PLACE, CONF_POST_CODE
-from .coordinator import SwissMeteoWarningsDataUpdateCoordinator
+from .swissmeteowarningsclient import SwissMeteoWarningsApiClient
+from .const import DOMAIN, CONF_POST_CODE
+from .coordinator import SwissMeteoWarningsCoordinator
 
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
@@ -24,11 +24,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][
         entry.entry_id
-    ] = coordinator = SwissMeteoWarningsDataUpdateCoordinator(
+    ] = coordinator = SwissMeteoWarningsCoordinator(
         hass=hass,
         client=SwissMeteoWarningsApiClient(
             entry.data[CONF_POST_CODE],
-            entry.data[CONF_PLACE],
             hass.config.language,
             hass.config.country,
             session=async_get_clientsession(hass),
