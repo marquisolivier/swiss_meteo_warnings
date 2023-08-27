@@ -6,33 +6,35 @@ https://github.com/marquisolivier/swiss_meteo_warnings
 from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, Platform
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import SwissMeteoWarningsApiClient
-from .const import DOMAIN
+from .const import DOMAIN, CONF_PLACE, CONF_POST_CODE
 from .coordinator import SwissMeteoWarningsDataUpdateCoordinator
 
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
-    Platform.BINARY_SENSOR,
-    Platform.SWITCH,
 ]
-
 
 # https://developers.home-assistant.io/docs/config_entries_index/#setting-up-an-entry
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up this integration using UI."""
     hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN][entry.entry_id] = coordinator = SwissMeteoWarningsDataUpdateCoordinator(
+    hass.data[DOMAIN][
+        entry.entry_id
+    ] = coordinator = SwissMeteoWarningsDataUpdateCoordinator(
         hass=hass,
         client=SwissMeteoWarningsApiClient(
-            username=entry.data[CONF_USERNAME],
-            password=entry.data[CONF_PASSWORD],
+            entry.data[CONF_POST_CODE],
+            entry.data[CONF_PLACE],
+            hass.config.language,
+            hass.config.country,
             session=async_get_clientsession(hass),
-        ),
+        )
     )
+
     # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
     await coordinator.async_config_entry_first_refresh()
 

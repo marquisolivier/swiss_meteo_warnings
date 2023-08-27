@@ -13,7 +13,6 @@ from homeassistant.exceptions import ConfigEntryAuthFailed
 
 from .api import (
     SwissMeteoWarningsApiClient,
-    SwissMeteoWarningsApiClientAuthenticationError,
     SwissMeteoWarningsApiClientError,
 )
 from .const import DOMAIN, LOGGER
@@ -43,7 +42,5 @@ class SwissMeteoWarningsDataUpdateCoordinator(DataUpdateCoordinator):
         """Update data via library."""
         try:
             return await self.client.async_get_data()
-        except SwissMeteoWarningsApiClientAuthenticationError as exception:
-            raise ConfigEntryAuthFailed(exception) from exception
         except SwissMeteoWarningsApiClientError as exception:
             raise UpdateFailed(exception) from exception

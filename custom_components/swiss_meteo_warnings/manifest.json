@@ -4,6 +4,11 @@
   "codeowners": [
     "@marquisolivier"
   ],
+  "requirements": [
+    "requests>=2.22.0",
+    "pandas>=0.25.3",
+    "geopy>=2.0.0"
+  ],
   "config_flow": true,
   "documentation": "https://github.com/marquisolivier/swiss_meteo_warnings",
   "iot_class": "cloud_polling",
