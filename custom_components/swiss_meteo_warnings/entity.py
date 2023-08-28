@@ -12,7 +12,7 @@ class SwissMeteoWarningsEntity(CoordinatorEntity):
     """SwissMeteoWarningsEntity class."""
 
     LOGGER.debug("Swiss Meteo Warnings - entity")
-    
+
     _attr_attribution = ATTRIBUTION
 
     def __init__(self, coordinator: SwissMeteoWarningsCoordinator) -> None:

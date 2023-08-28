@@ -117,6 +117,6 @@ class SwissMeteoWarningSensor(CoordinatorEntity, SensorEntity):
             warning_level.name,
             self._attr_native_value
         )
-        
+
         self.async_write_ha_state()
 
