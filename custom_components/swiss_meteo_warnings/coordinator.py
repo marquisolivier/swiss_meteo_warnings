@@ -20,6 +20,8 @@ from .const import DOMAIN, LOGGER
 class SwissMeteoWarningsCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
+    LOGGER.debug("Swiss Meteo Warnings - coordinator")
+
     config_entry: ConfigEntry
 
     def __init__(
@@ -28,6 +30,7 @@ class SwissMeteoWarningsCoordinator(DataUpdateCoordinator):
         client: SwissMeteoWarningsApiClient,
     ) -> None:
         """Initialize."""
+        LOGGER.debug("Swiss Meteo Warnings - coordinator - __init__")
         self.client = client
         super().__init__(
             hass=hass,
@@ -38,6 +41,7 @@ class SwissMeteoWarningsCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         """Update data via library."""
+        LOGGER.debug("Swiss Meteo Warnings - coordinator - _async_update_data")
         try:
             return await self.client.async_get_data()
         except SwissMeteoWarningsApiClientError as exception:

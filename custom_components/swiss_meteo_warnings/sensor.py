@@ -68,6 +68,7 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up sensor entities based on a config entry."""
+    LOGGER.debug("Swiss Meteo Warnings - sensor - async_setup_entry")
 
     coordinator = hass.data[DOMAIN][config.entry_id]
 
@@ -82,6 +83,7 @@ async def async_setup_entry(
 class SwissMeteoWarningSensor(CoordinatorEntity, SensorEntity):
     """Representation of a Sensor."""
 
+    LOGGER.debug("Swiss Meteo Warnings - sensor")
     _attr_has_entity_name = True
 
     def __init__(
@@ -90,6 +92,7 @@ class SwissMeteoWarningSensor(CoordinatorEntity, SensorEntity):
         description: SwissMeteoWarningsEntityDescription,
     ) -> None:
         """Initialize a single sensor."""
+        LOGGER.debug("Swiss Meteo Warnings - sensor - __init__")
         super().__init__(coordinator)
         self.entity_description: SwissMeteoWarningsEntityDescription = description
 
@@ -99,6 +102,7 @@ class SwissMeteoWarningSensor(CoordinatorEntity, SensorEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
+        LOGGER.debug("Swiss Meteo Warnings - sensor - _handle_coordinator_update")
         warnings = list[SwissMeteoWarning](self.coordinator.data)
 
         warning_level = WarningLevel.NONE
@@ -107,10 +111,12 @@ class SwissMeteoWarningSensor(CoordinatorEntity, SensorEntity):
             if warning is not None:
                 warning_level = warning.level
 
+        LOGGER.debug("Swiss Meteo Warnings - sensor - level")
         self._attr_native_value = int(warning_level)
         LOGGER.debug("%s is %s (%s)", self.entity_description.key.name,
             warning_level.name,
             self._attr_native_value
         )
+        
         self.async_write_ha_state()
 

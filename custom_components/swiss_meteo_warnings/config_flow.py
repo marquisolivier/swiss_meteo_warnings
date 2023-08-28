@@ -8,11 +8,12 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .geodata import GeoData
 
-from .const import CONF_POST_CODE, CONF_PLACE
-from .const import DOMAIN
+from .const import DOMAIN, LOGGER, CONF_POST_CODE, CONF_PLACE
 
 class SwissMeteoWarningsFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Swiss Meteo Warnings."""
+
+    LOGGER.debug("Swiss Meteo Warnings - config flow - SwissMeteoWarningsFlowHandler")
 
     VERSION = 1
 
@@ -28,14 +29,17 @@ class SwissMeteoWarningsFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 data=user_input,
             )
 
-        geoData = GeoData(
+        LOGGER.debug("Swiss Meteo Warnings - config flow - get geo data")
+        geo_data = GeoData(
             self.hass.config.latitude,
             self.hass.config.longitude,
             session=async_get_clientsession(self.hass)
         )
-        await geoData.init_geo_data()
-        place = geoData.get_place()
-        post_code = geoData.get_post_code()
+        await geo_data.init_geo_data()
+        place = geo_data.get_place()
+        post_code = geo_data.get_post_code()
+
+        LOGGER.debug("Swiss Meteo Warnings - config flow - got geo data")
 
         return self.async_show_form(
             step_id="user",
