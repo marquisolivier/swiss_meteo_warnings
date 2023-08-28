@@ -41,7 +41,7 @@ class WarningLevel(IntEnum):
     HIGH = 4
     HIGHEST = 5
 
-class Link():
+class Link:
     """Link returned by Api."""
 
     def __init__(self):
@@ -52,7 +52,7 @@ class Link():
     text: str
     url: str
 
-class SwissMeteoWarning():
+class SwissMeteoWarning:
     """Warning object definition."""
 
     def __init__(self):
