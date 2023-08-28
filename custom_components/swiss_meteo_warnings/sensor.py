@@ -96,7 +96,7 @@ class SwissMeteoWarningSensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self.entity_description: SwissMeteoWarningsEntityDescription = description
 
-        self._attr_device_info = coordinator.client.post_code
+        #self._attr_device_info = coordinator.client.post_code
         self._attr_unique_id = f"{coordinator.client.post_code}_{description.key.name}"
 
     @callback
