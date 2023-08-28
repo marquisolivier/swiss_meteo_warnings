@@ -1,5 +1,5 @@
-""" class to help to get post code and place from the latitude and longitude
-    with help of openstreetmap api """
+"""class to help to get post code and place."""
+
 from __future__ import annotations
 
 import aiohttp
@@ -23,19 +23,21 @@ _API_URL = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={}&lon
 
 class GeoData:
     """Geo Data API Client."""
+
     def __init__(
         self,
         latitude : float,
         longitude : float,
         session : aiohttp.ClientSession,
     ) -> None:
+        """Init class."""
         self.__address = None
         self.__latitude = latitude
         self.__longitude = longitude
         self.__session = session
 
     async def init_geo_data(self):
-        """ Init geo data """
+        """Init geo data."""
         self.__address = None
 
         url = _API_URL.format(self.__latitude, self.__longitude)
@@ -51,7 +53,7 @@ class GeoData:
             self.__address = (await response.json()).get("address")
 
     def get_place(self):
-        """ Get the place associated with the address """
+        """Get the place associated with the address."""
         if self.__address is None:
             return None
 
@@ -63,7 +65,7 @@ class GeoData:
         return None
 
     def get_post_code(self):
-        """ Get the post code associated with the address """
+        """Get the post code associated with the address."""
         if self.__address is None:
             return None
 

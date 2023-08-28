@@ -10,6 +10,7 @@ from .coordinator import SwissMeteoWarningsCoordinator
 
 class SwissMeteoWarningsEntity(CoordinatorEntity):
     """SwissMeteoWarningsEntity class."""
+
     _attr_attribution = ATTRIBUTION
 
     def __init__(self, coordinator: SwissMeteoWarningsCoordinator) -> None:

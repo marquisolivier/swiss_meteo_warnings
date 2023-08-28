@@ -13,7 +13,8 @@ import pandas as pd
 from .const import LOGGER
 
 class WarningType(IntEnum):
-    """ Types of warnings with ids """
+    """Types of warnings with ids."""
+
     THUNDERSTORM = 1
     RAIN = 2
     HEAT_WAVE = 7
@@ -31,7 +32,8 @@ class WarningType(IntEnum):
 
 
 class WarningLevel(IntEnum):
-    """ Warnings level definitions """
+    """Warnings level definitions."""
+
     NONE = 0
     LOW = 1
     MODERATE = 2
@@ -40,8 +42,10 @@ class WarningLevel(IntEnum):
     HIGHEST = 5
 
 class Link():
-    """ Link returned by Api """
+    """Link returned by Api."""
+
     def __init__(self):
+        """Init class."""
         self.text = None
         self.url = None
 
@@ -49,8 +53,10 @@ class Link():
     url: str
 
 class SwissMeteoWarning():
-    """ Warning object definition """
+    """Warning object definition."""
+
     def __init__(self):
+        """Init class."""
         self.text = None
         self.html = None
         self.valid_from = datetime.min
@@ -78,6 +84,7 @@ class SwissMeteoWarningsApiClientCommunicationError(
 
 class SwissMeteoWarningsApiClient:
     """Meteo Swiss Warnings API Client."""
+
     LOGGER.info("Create SwissMeteoWarningsApiClient instance")
 
     def __init__(

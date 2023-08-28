@@ -20,6 +20,7 @@ from .const import DOMAIN, LOGGER
 
 class SwissMeteoWarningsCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
+
     config_entry: ConfigEntry
 
     def __init__(
