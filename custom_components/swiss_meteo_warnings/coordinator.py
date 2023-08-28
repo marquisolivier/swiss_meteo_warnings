@@ -5,7 +5,6 @@ from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
     UpdateFailed,
@@ -35,12 +34,6 @@ class SwissMeteoWarningsCoordinator(DataUpdateCoordinator):
             logger=LOGGER,
             name=DOMAIN,
             update_interval=timedelta(minutes=1),
-        )
-
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, client.post_code)},
-            manufacturer="Meteo Suisse",
-            name=f"Meteo Suisse {client.post_code}",
         )
 
     async def _async_update_data(self):
