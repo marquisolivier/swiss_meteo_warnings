@@ -42,18 +42,11 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 ***
 
 [swiss_meteo_warnings]: https://github.com/marquisolivier/swiss_meteo_warnings
-[buymecoffee]: https://www.buymeacoffee.com/marquisolivier
-[buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits-shield]: https://img.shields.io/github/commit-activity/y/marquisolivier/swiss_meteo_warnings.svg?style=for-the-badge
 [commits]: https://github.com/marquisolivier/swiss_meteo_warnings/commits/main
 [hacs]: https://github.com/hacs/integration
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
-[discord]: https://discord.gg/Qa5fW2R
-[discord-shield]: https://img.shields.io/discord/330944238910963714.svg?style=for-the-badge
-[exampleimg]: example.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/marquisolivier/swiss_meteo_warnings.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-Joakim%20Sørensen%20%40marquisolivier-blue.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/marquisolivier/swiss_meteo_warnings.svg?style=for-the-badge
 [releases]: https://github.com/marquisolivier/swiss_meteo_warnings/releases
