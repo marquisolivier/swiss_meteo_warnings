@@ -18,6 +18,7 @@ class WarningType(IntEnum):
     THUNDERSTORM = 1
     RAIN = 2
     HEAT_WAVE = 7
+    AVALANCHES = 8
     FOREST_FIRE = 10
     FLOOD = 11
     '''

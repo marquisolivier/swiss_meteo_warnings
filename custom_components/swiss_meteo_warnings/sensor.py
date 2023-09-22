@@ -28,36 +28,37 @@ SENSOR_TYPES: list[SwissMeteoWarningsEntityDescription] = [
         key=WarningType.THUNDERSTORM,
         translation_key="thunderstorm",
         state_class=SensorStateClass.MEASUREMENT,
-        #value=lambda data: LOGGER.warn(data),
         icon="mdi:weather-lightning",
     ),
     SwissMeteoWarningsEntityDescription(
         key=WarningType.RAIN,
         translation_key="rain",
         state_class=SensorStateClass.MEASUREMENT,
-        #value=lambda data: data.get("nh3_MR100"),
         icon="mdi:weather-pouring",
     ),
     SwissMeteoWarningsEntityDescription(
         key=WarningType.HEAT_WAVE,
         translation_key="heat_wave",
         state_class=SensorStateClass.MEASUREMENT,
-        #value=lambda data: data.get("ash3"),
         icon="mdi:heat-wave",
     ),
     SwissMeteoWarningsEntityDescription(
         key=WarningType.FOREST_FIRE,
         translation_key="forest_fire",
         state_class=SensorStateClass.MEASUREMENT,
-        #value=lambda data: data.get("ash3"),
         icon="mdi:fire",
     ),
     SwissMeteoWarningsEntityDescription(
         key=WarningType.FLOOD,
         translation_key="flood",
         state_class=SensorStateClass.MEASUREMENT,
-        #value=lambda data: data.get("ash3"),
         icon="mdi:home-flood",
+    ),
+    SwissMeteoWarningsEntityDescription(
+        key=WarningType.AVALANCHES,
+        translation_key="avalanches",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:avalanche",
     ),
 ]
 
