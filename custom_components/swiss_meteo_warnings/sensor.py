@@ -58,7 +58,13 @@ SENSOR_TYPES: list[SwissMeteoWarningsEntityDescription] = [
         key=WarningType.AVALANCHES,
         translation_key="avalanches",
         state_class=SensorStateClass.MEASUREMENT,
-        icon="mdi:avalanche",
+        icon="mdi:landslide",
+    ),
+    SwissMeteoWarningsEntityDescription(
+        key=WarningType.EARTHQUAKE,
+        translation_key="earthquake",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:earth",
     ),
 ]
 

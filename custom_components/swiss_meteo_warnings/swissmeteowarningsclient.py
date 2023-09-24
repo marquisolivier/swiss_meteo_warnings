@@ -20,10 +20,9 @@ class WarningType(IntEnum):
     HEAT_WAVE = 7
     AVALANCHES = 8
     FOREST_FIRE = 10
+    EARTHQUAKE = 9
     FLOOD = 11
     '''
-    AVALANCHES =
-    EARTHQUAKE =
     FROST =
     SLIPPERY_ROADS =
     SNOW =
