@@ -19,8 +19,8 @@ class WarningType(IntEnum):
     RAIN = 2
     HEAT_WAVE = 7
     AVALANCHES = 8
-    FOREST_FIRE = 10
     EARTHQUAKE = 9
+    FOREST_FIRE = 10
     FLOOD = 11
     '''
     FROST =
@@ -131,7 +131,7 @@ class SwissMeteoWarningsApiClient:
                 warn_level_int = json_warning.get('warnLevel')
                 try:
                     warn_level = WarningLevel(warn_level_int)
-                    if (warn_level is WarningLevel.NONE or warn_level is WarningLevel.LOW):
+                    if (warn_level is WarningLevel.NONE):
                         continue
                 except Exception:
                     LOGGER.warning("Meteo Swiss Warnings Client - Warning level %s unknown.", str(warn_level_int))
