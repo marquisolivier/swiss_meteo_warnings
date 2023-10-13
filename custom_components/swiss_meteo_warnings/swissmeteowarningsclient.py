@@ -15,6 +15,7 @@ from .const import LOGGER
 class WarningType(IntEnum):
     """Types of warnings with ids."""
 
+    WIND = 0
     THUNDERSTORM = 1
     RAIN = 2
     HEAT_WAVE = 7
@@ -26,7 +27,7 @@ class WarningType(IntEnum):
     FROST =
     SLIPPERY_ROADS =
     SNOW =
-    WIND =
+
     '''
     UNKNOWN = 1000
 

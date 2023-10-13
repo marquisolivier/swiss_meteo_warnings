@@ -25,6 +25,12 @@ class SwissMeteoWarningsEntityDescription(SensorEntityDescription):
 # Keys must match those in the data dictionary
 SENSOR_TYPES: list[SwissMeteoWarningsEntityDescription] = [
     SwissMeteoWarningsEntityDescription(
+        key=WarningType.WIND,
+        translation_key="wind",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:weather-windy",
+    ),
+    SwissMeteoWarningsEntityDescription(
         key=WarningType.THUNDERSTORM,
         translation_key="thunderstorm",
         state_class=SensorStateClass.MEASUREMENT,
