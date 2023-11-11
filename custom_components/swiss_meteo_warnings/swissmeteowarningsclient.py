@@ -18,6 +18,8 @@ class WarningType(IntEnum):
     WIND = 0
     THUNDERSTORM = 1
     RAIN = 2
+    SNOW = 3
+    SLIPPERY_ROADS = 4
     HEAT_WAVE = 7
     AVALANCHES = 8
     EARTHQUAKE = 9
@@ -25,9 +27,6 @@ class WarningType(IntEnum):
     FLOOD = 11
     '''
     FROST =
-    SLIPPERY_ROADS =
-    SNOW =
-
     '''
     UNKNOWN = 1000
 

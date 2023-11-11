@@ -43,6 +43,18 @@ SENSOR_TYPES: list[SwissMeteoWarningsEntityDescription] = [
         icon="mdi:weather-pouring",
     ),
     SwissMeteoWarningsEntityDescription(
+        key=WarningType.SNOW,
+        translation_key="snow",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:snowflake",
+    ),
+    SwissMeteoWarningsEntityDescription(
+        key=WarningType.SLIPPERY_ROADS,
+        translation_key="slippery_roads",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:road-variant",
+    ),
+    SwissMeteoWarningsEntityDescription(
         key=WarningType.HEAT_WAVE,
         translation_key="heat_wave",
         state_class=SensorStateClass.MEASUREMENT,
