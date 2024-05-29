@@ -5,8 +5,10 @@
     "@marquisolivier"
   ],
   "config_flow": true,
+  "dependencies": [],
   "documentation": "https://github.com/marquisolivier/swiss_meteo_warnings",
   "iot_class": "cloud_polling",
+  "integration_type": "service",
   "issue_tracker": "https://github.com/marquisolivier/swiss_meteo_warnings/issues",
   "requirements": [
     "requests>=2.22.0",
