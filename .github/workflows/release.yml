@@ -30,6 +30,6 @@ jobs:
           zip swiss_meteo_warnings.zip -r ./
 
       - name: "Upload the ZIP file to the release"
-        uses: softprops/action-gh-release@v2.0.9
+        uses: softprops/action-gh-release@v2.2.1
         with:
           files: ${{ github.workspace }}/custom_components/swiss_meteo_warnings/swiss_meteo_warnings.zip
